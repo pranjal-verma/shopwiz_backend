@@ -1,7 +1,8 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const debug = require("debug")("shopwiz:auth-controller");
 const { UserModel } = require("../models/user");
-
+debug("auth-controller");
 async function handleLogin(req, res) {
   const { email, password } = req.body || {};
   if (!email || !password)
@@ -34,6 +35,7 @@ async function handleLogin(req, res) {
         .json({ error: null, token, userId: userResult._id, email });
     }
   } catch (error) {
+    debug("Error", error);
     console.log(
       "🚀 ~ file: auth.routes.js ~ line 51 ~ router.post ~ error",
       error
