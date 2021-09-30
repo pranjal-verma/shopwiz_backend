@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const bcyrpt = require("bcrypt");
 
+// const { orderSchema } = require("./order");
 const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
@@ -13,6 +14,10 @@ const UserSchema = new Schema({
     type: String,
     required: true,
   },
+
+  // orders: {
+  //   type: [String],
+  // },
 });
 
 const UserModel = mongoose.model("user", UserSchema);

@@ -1,6 +1,23 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const debug = require("debug")("shopwiz:product-controller");
 const { productModel: ProductModel } = require("../models/product");
+
+// function to grab product by ID
+// @Param {productId}
+// @retuns {Product}
+async function getProduct(req, res) {
+  const { productId = "" } = req.query || {};
+  if (!productId)
+    return res.status(200).json({ error: "productId is expected" });
+  try {
+    const prod = await ProductModel.findOne({ _id: productId });
+    return res.status(200).json(prod);
+  } catch (error) {
+    debug("Error getProduct", error);
+    return res.status(500).json({ error: true });
+  }
+}
 async function getCategories(req, res) {
   try {
     const productsAggregate = await ProductModel.aggregate([
@@ -50,7 +67,7 @@ async function categoryWiseProducts(req, res) {
     let result = categoryWiseData.map((element) => {
       return {
         category: element?._id.category,
-        data: element?.products?.slice(0, 5),
+        data: element?.products?.slice(0, 3),
       };
     });
     res.status(200).json(result);
@@ -96,6 +113,7 @@ module.exports = {
   getCategories,
   categoryWiseProducts,
   getProductsByCategory,
+  getProduct,
 };
 function getDumData(params) {
   return [

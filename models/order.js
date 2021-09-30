@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const bcyrpt = require("bcrypt");
 const short = require("short-uuid");
 const { UserSchema } = require("./user");
-const { ProductSchema } = require("./product");
+const { productSchema: ProductSchema } = require("./product");
 const Schema = mongoose.Schema;
 
 const orderSchema = Schema({
@@ -10,18 +10,34 @@ const orderSchema = Schema({
     type: String,
     default: short.generate(),
   },
-  _orderedOne: {
+  _orderedon: {
     type: Date,
+    default: new Date(),
+  },
+
+  status: {
+    type: String,
+    default: "Ordered",
   },
   moneyPaid: {
     type: Number,
   },
   productId: {
-    type: 3,
+    type: Schema.Types.ObjectId,
+    // type: ProductSchema,
+    ref: "products",
   },
+
   userId: {
-    type: UserSchema,
+    type: Schema.Types.ObjectId,
+
+    // type: UserSchema,
+    ref: "user",
   },
 });
+// text index for fts search
 
-const orderModel = mongoose.Schema("");
+orderSchema.index({ orderId: "text" });
+const OrderModel = mongoose.model("orders", orderSchema);
+
+module.exports = { OrderModel, orderSchema };

@@ -12,12 +12,15 @@ const {
   getCategories,
   categoryWiseProducts,
   getProductsByCategory,
+  getProduct,
 } = require("../controllers/product.controller");
 
 router.get("/categories", async (req, res) => {
   await getCategories(req, res);
 });
-
+router.get("/", async (req, res) => {
+  await getProduct(req, res);
+});
 router.get("/categoryWiseData", async (req, res) => {
   await getProductsByCategory(req, res);
 });

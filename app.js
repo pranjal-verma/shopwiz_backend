@@ -8,6 +8,8 @@ const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
 const authRouter = require("./routes/auth.routes.js");
 const productRoutes = require("./routes/products.routes");
+const orderRoutes = require("./routes/order.routes");
+
 const passport = require("passport");
 const cors = require("cors");
 const app = express();
@@ -36,4 +38,5 @@ app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/auth", authRouter);
 app.use("/products", productRoutes);
+app.use("/order", orderRoutes);
 module.exports = app;

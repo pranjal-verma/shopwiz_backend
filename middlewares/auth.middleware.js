@@ -1,9 +1,16 @@
 const jwt = require("jsonwebtoken");
 const moment = require("moment");
+var debug = require("debug")("shopwiz:auth-middleware");
+
 const a = {};
+debug("Auth middleware");
 
 function verifyToken(req, res, next) {
   let token = req.headers?.authorization || "";
+  console.log(
+    "🚀 ~ file: auth.middleware.js ~ line 10 ~ verifyToken ~ token",
+    token
+  );
   console.log(
     "🚀 ~ file: auth.middleware.js ~ line 6 ~ verifyToken ~ token",
     token.split("Bearer ")
@@ -13,16 +20,13 @@ function verifyToken(req, res, next) {
   token = token[1];
   console.log(
     "🚀 ~ file: auth.middleware.js ~ line 10 ~ verifyToken ~ token",
+    token,
     typeof token,
     token.indexOf(" ")
   );
   // return res.end();
   try {
-    const tokenDecoded = jwt.verify(
-      token,
-      // "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InByYW5qYWwudmVybWFAZ21haWwuY29tIiwicGFzc3dvcmQiOiJhbmNkIiwiX2NyZWF0ZWRPbiI6IjIwMjEtMDktMjlUMDM6NDQ6MDMuNzc5WiIsImlhdCI6MTYzMjg4NzA0M30.e7fEL59lkijPBf-CrSfeWh1hEnKqfhDGavTCGid3lOo",
-      "sshhhhhh"
-    );
+    const tokenDecoded = jwt.verify(token, "sshhhhhh");
     console.log(tokenDecoded);
     const { iat, email, password, _createdOn } = tokenDecoded || {};
     let diff = moment().diff(moment(_createdOn), "days");
@@ -37,8 +41,9 @@ function verifyToken(req, res, next) {
     next();
   } catch (error) {
     console.error(error);
+    debug("Error", error);
     return res.status(401).json({ error: "invalid token" });
   }
-  next();
 }
+
 module.exports = { verifyToken, a };

@@ -5,7 +5,7 @@
  */
 
 var app = require("../app");
-var debug = require("debug")("khareedo:server");
+var debug = require("debug")("shopwiz:server");
 var http = require("http");
 const mongoose = require("mongoose");
 /**

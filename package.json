@@ -1,9 +1,9 @@
 {
-  "name": "khareedo",
+  "name": "shopwiz",
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "DEBUG=khareedo:* nodemon ./bin/www",
+    "dev": "DEBUG=shopwiz:* nodemon ./bin/www",
     "start": "node ./bin/www"
   },
   "dependencies": {
