@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "DEBUG=shopwiz:* nodemon ./bin/www",
-    "start": "node ./bin/www"
+    "start": "DEBUG=shopwiz:* node ./bin/www"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",

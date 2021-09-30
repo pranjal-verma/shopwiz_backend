@@ -25,7 +25,9 @@ var server = http.createServer(app);
  * Listen on provided port, on all network interfaces.
  */
 async function dbConnect() {
-  await mongoose.connect("mongodb://localhost:27017/khareedo");
+  await mongoose.connect(
+    "mongodb+srv://dev:dev@cluster0.u4ymq.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+  );
 }
 dbConnect()
   .then(() => {
