@@ -26,7 +26,7 @@ var server = http.createServer(app);
  */
 async function dbConnect() {
   await mongoose.connect(
-    "mongodb+srv://dev:dev@cluster0.u4ymq.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+    "mongodb+srv://:@cluster0.u4ymq.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
   );
 }
 dbConnect()
