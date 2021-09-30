@@ -24,14 +24,11 @@ const orderSchema = Schema({
   },
   productId: {
     type: Schema.Types.ObjectId,
-    // type: ProductSchema,
     ref: "products",
   },
 
   userId: {
     type: Schema.Types.ObjectId,
-
-    // type: UserSchema,
     ref: "user",
   },
 });

@@ -8,11 +8,15 @@ var app = require("../app");
 var debug = require("debug")("shopwiz:server");
 var http = require("http");
 const mongoose = require("mongoose");
+const config = require("../config");
+
+debug("config", config);
+
 /**
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || "3000");
+var port = normalizePort(config.port || "3000");
 app.set("port", port);
 
 /**
@@ -25,9 +29,7 @@ var server = http.createServer(app);
  * Listen on provided port, on all network interfaces.
  */
 async function dbConnect() {
-  await mongoose.connect(
-    "mongodb+srv://:@cluster0.u4ymq.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
-  );
+  await mongoose.connect(config.connectionString);
 }
 dbConnect()
   .then(() => {

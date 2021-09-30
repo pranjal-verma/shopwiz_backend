@@ -36,6 +36,7 @@ async function handleLogin(req, res) {
     }
   } catch (error) {
     debug("Error", error);
+    return res.status(401).send(error);
     console.log(
       "🚀 ~ file: auth.routes.js ~ line 51 ~ router.post ~ error",
       error

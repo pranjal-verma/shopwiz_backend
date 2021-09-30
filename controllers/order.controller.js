@@ -28,6 +28,9 @@ async function getOrder(req, res) {
     return res.status(200).json({ error: "order id is expected" });
   }
 }
+// function to insert into orders table
+// @param userId, productID
+// @return new order from order Schema
 
 async function placeOrder(req, res) {
   const { userId = "", productId = "" } = req.body ?? {};
@@ -48,7 +51,7 @@ async function placeOrder(req, res) {
       },
     },
     // { $unwind: { path: "$userId" } },
-    // { $match: { "userId.emaik": "qq" } },
+    // { $match: { "userId.email": "qq" } },
   ]);
   console.log(
     "🚀 ~ file: order.controller.js ~ line 42 ~ placeOrder ~ temp",
@@ -73,11 +76,15 @@ async function getUserOrders(req, res) {
   let result = {};
   let c = 0;
   let t = [];
-  const { userId = "61543dc719d2dfc09d3b6882" } = req.body ?? {};
+  const { userId = "" } = req.query ?? {};
+  console.log(
+    "🚀 ~ file: order.controller.js ~ line 80 ~ getUserOrders ~ userId",
+    userId
+  );
   result = OrderModel.find()
     .populate("productId")
     .populate("userId", "_id")
-    .limit(2)
+    // .limit(2)
     .exec((err, data) => {
       if (err) {
         return console.log(err);
@@ -86,15 +93,20 @@ async function getUserOrders(req, res) {
       // result = data;
       let store = data.filter((item) => {
         console.log(
-          "🚀 ~ file: order.controller.js ~ line 77 ~ store ~ item",
-          item
+          "🚀 ~ file: order.controller.js ~ line 77 ~ store ~ item"
+          // item
         );
-        // console.log(item)
-        return item?.userId?._id == userId;
+        console.log(item.userId._id);
+        // return true;
+        return item?.userId?._id?.equals(userId);
       });
-      return res.send(store);
-    });
 
+      return res.status(200).json(store);
+    });
+  console.log(
+    "🚀 ~ file: order.controller.js ~ line 102 ~ store ~ result",
+    result
+  );
   // return res.send(result);
 }
 module.exports = { getOrder, placeOrder, getUserOrders };

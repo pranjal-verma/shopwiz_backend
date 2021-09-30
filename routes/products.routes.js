@@ -1,11 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-const ProductModel = require("../models/product");
-
-// const short = require("short-uuid");
-// const { v4: uuidv4 } = require("uuid");
+const debug = require("debug")("product-routes");
+debug("product-routes");
 
 const {
   insertDummyData,
@@ -16,23 +12,37 @@ const {
 } = require("../controllers/product.controller");
 
 router.get("/categories", async (req, res) => {
-  await getCategories(req, res);
+  try {
+    await getCategories(req, res);
+  } catch (error) {
+    debug(error);
+  }
 });
 router.get("/", async (req, res) => {
-  await getProduct(req, res);
+  try {
+    await getProduct(req, res);
+  } catch (error) {
+    debug("error", error);
+  }
 });
 router.get("/categoryWiseData", async (req, res) => {
-  await getProductsByCategory(req, res);
+  try {
+    await getProductsByCategory(req, res);
+  } catch (error) {
+    debug("error", error);
+  }
 });
 router.get("/categoryProducts", async (req, res) => {
   try {
     await categoryWiseProducts(req, res);
   } catch (error) {
+    debug("error", error);
     console.error(error);
   }
 });
-router.get("/insertDummyData", async (req, res) => {
-  await insertDummyData();
-  //   res.end();
-});
+// @deprecated
+// router.get("/insertDummyData", async (req, res) => {
+//   await insertDummyData();
+//   //   res.end();
+// });
 module.exports = router;
